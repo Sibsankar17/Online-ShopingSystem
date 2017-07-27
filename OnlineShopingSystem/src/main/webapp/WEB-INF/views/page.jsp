@@ -45,9 +45,10 @@
 			<c:if test="${onClickAbout==true}">
 				<%@include file="about.jsp"%>
 			</c:if>
-			<c:if test="${onClickProduct==true}">
+			<c:if test="${onClickAllProduct==true or onClickCategoryProduct==true}">
 				<%@include file="product.jsp"%>
 			</c:if>
+			
 		</div>
 		      <!-- Footer Path-->
 		<%@include file="./common/footer.jsp"%>

@@ -13,6 +13,12 @@
 
 	</properties>
 	<dependencies>
+		<!-- link with backend project -->
+		<dependency>
+			<groupId>net.Sibsankar</groupId>
+			<artifactId>OnlineShopingBackend</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/javax/javaee-api -->
 		<dependency>
 			<groupId>javax</groupId>

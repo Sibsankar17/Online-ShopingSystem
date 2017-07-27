@@ -7,11 +7,12 @@ $(function() {
 	case 'Contact':
 		$('#contact').addClass('active');
 		break;
-	case 'Product':
+	case 'Products':
 		$('#product').addClass('active');
 		break;
 	default:
-		$('#home').addClass('active');
+		$('#product').addClass('active');
+		$('#a_'+menu).addClass('active');
 
 	}
 })
