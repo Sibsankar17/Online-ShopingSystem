@@ -3,7 +3,6 @@ package net.Sibsankar.OnlineShopingBackend.DaoImpl;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,18 +18,22 @@ public class CategoryDaoImpl implements CategoryDAO {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public List<Category> list() {
+	public List<Category> findAll() {
 		
-		String hql="from Category where active=:active";
-       Query query=sessionFactory.getCurrentSession().createQuery(hql).setParameter("active",true);
-        
-		return query.getResultList();
+		String hql="FROM Category  WHERE active = :active";
+		
+       return sessionFactory.getCurrentSession().createQuery(hql,Category.class).setParameter("active", true).getResultList();
 	}
 
 	@Override
 	public Category get(int id) {
 
-		return sessionFactory.getCurrentSession().get(Category.class,Integer.valueOf(id));
+		try {
+			return sessionFactory.getCurrentSession().get(Category.class, Integer.valueOf(id));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
@@ -42,6 +45,8 @@ public class CategoryDaoImpl implements CategoryDAO {
 			ex.printStackTrace();
 			return false;
 		}
+		
+		
 	}
 
 	@Override
@@ -53,6 +58,7 @@ public class CategoryDaoImpl implements CategoryDAO {
 			ex.printStackTrace();
 			return false;
 		}
+		
 	}
 
 	@Override
@@ -65,5 +71,6 @@ public class CategoryDaoImpl implements CategoryDAO {
 			ex.printStackTrace();
 			return false;
 		}
+		
 	}
 }

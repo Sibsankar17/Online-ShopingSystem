@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class HibernateConfig {
 
-	private final static String DATABASE_URL = "jdbc:mysql://localhost:3306/ONLINESHOP";
+	private final static String DATABASE_URL = "jdbc:mysql://localhost:3306/onlineshop";
 	private final static String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
 	private final static String DATABASE_DILACT = "org.hibernate.dialect.MySQLDialect";
 	private final static String DATABASE_USERNAME = "root";

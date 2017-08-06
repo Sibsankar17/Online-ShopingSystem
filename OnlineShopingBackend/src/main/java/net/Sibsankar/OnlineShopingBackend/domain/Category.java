@@ -3,18 +3,19 @@ package net.Sibsankar.OnlineShopingBackend.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Category {
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue
 	private int id;
 	private String name;
-	private String descipation;
-	@Column(name = "imege_url")
-	private String imegeUrl;
+	private String description;
+	@Column(name = "image_url")
+	private String imageURL;
+	
 	@Column(name = "is_active")
 	private boolean active = true;
 
@@ -34,20 +35,20 @@ public class Category {
 		this.name = name;
 	}
 
-	public String getDescipation() {
-		return descipation;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDescipation(String descipation) {
-		this.descipation = descipation;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public String getImegeUrl() {
-		return imegeUrl;
+	public String getImageURL() {
+		return imageURL;
 	}
 
-	public void setImegeUrl(String imegeUrl) {
-		this.imegeUrl = imegeUrl;
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
 	}
 
 	public boolean isActive() {
@@ -60,8 +61,12 @@ public class Category {
 
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", name=" + name + ", descipation=" + descipation + ", imegeUrl=" + imegeUrl
+		return "Category [id=" + id + ", name=" + name + ", description=" + description + ", imageURL=" + imageURL
 				+ ", active=" + active + "]";
 	}
-  
+
+	
+	
+	
+
 }

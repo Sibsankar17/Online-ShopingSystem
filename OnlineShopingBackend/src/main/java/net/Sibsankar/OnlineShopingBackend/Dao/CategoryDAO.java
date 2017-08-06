@@ -6,7 +6,7 @@ import net.Sibsankar.OnlineShopingBackend.domain.Category;
 
 public interface CategoryDAO {
 
-	List<Category> list();
+	List<Category> findAll();
 
 	Category get(int id);
 

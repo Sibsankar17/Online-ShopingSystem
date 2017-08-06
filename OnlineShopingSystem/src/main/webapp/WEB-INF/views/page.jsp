@@ -20,22 +20,25 @@
 <title>OnlineShoping -${title}</title>
 <script type="text/javascript">
 	window.menu = '${title}';
+	window.contextRoot='${contextRoot}'
 </script>
 
-<!-- Bootstrap Core CSS -->
+ <!-- Bootstrap Core CSS -->
 <link href="${css}/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap flatly theme -->
 <link href="${css}/bootstrap-flatly-theme.css" rel="stylesheet">
 
+<link href="${css}/dataTables.bootstrap.css" rel="stylesheet">
 <!-- Custom CSS -->
 <link href="${css}/main.css" rel="stylesheet">
 </head>
 
 <body>
 	<div class="wrapper">
-		      <!-- Navigation -->
+		<!-- Navigation -->
 		<%@include file="./common/navbar.jsp"%>
 		<div class="content">
-			      <!-- Page Content -->
+			<!-- Page Content -->
 			<c:if test="${onClickHome==true}">
 				<%@include file="home.jsp"%>
 			</c:if>
@@ -45,19 +48,37 @@
 			<c:if test="${onClickAbout==true}">
 				<%@include file="about.jsp"%>
 			</c:if>
-			<c:if test="${onClickAllProduct==true or onClickCategoryProduct==true}">
-				<%@include file="product.jsp"%>
+			<c:if
+				test="${onClickAllProduct==true or onClickCategoryProduct==true}">
+				<%@include file="productList.jsp"%>
 			</c:if>
-			
+			<c:if test="${onClickShowProduct==true}">
+				<%@include file="Product.jsp"%>
+			</c:if>
+			<c:if test="${onClickManageProduct==true}">
+			<%@include file="manageProduct.jsp" %>
+			</c:if>
+
 		</div>
-		      <!-- Footer Path-->
+		<!-- Footer Path-->
 		<%@include file="./common/footer.jsp"%>
 
 		<!-- jQuery -->
 		<script src="${js}/jquery.js"></script>
-		<script src="${js}/navebar.js"></script>
+		<!-- jQuery Validation -->
+		<script src="${js}/jquery.validate.js"></script>
+		
+
 		<!-- Bootstrap Core JavaScript -->
 		<script src="${js}/bootstrap.min.js"></script>
+		<!-- DAtatable Plugin -->
+		<script src="${js}/jquery.dataTables.js"></script>
+		
+		<!-- DAtatable Bootstrap Plugin -->
+		<script src="${js}/dataTables.bootstrap.js"></script>
+		<!-- Bootbox js -->
+		<script src="${js}/bootbox.min.js"></script>
+		<script src="${js}/navebar.js"></script>
 	</div>
 </body>
 
