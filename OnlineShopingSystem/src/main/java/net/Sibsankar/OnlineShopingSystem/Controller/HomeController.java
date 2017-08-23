@@ -1,11 +1,18 @@
 package net.Sibsankar.OnlineShopingSystem.Controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.Sibsankar.OnlineShopingBackend.Dao.CategoryDAO;
@@ -17,21 +24,25 @@ import net.Sibsankar.OnlineShopingSystem.Exception.ProductNotFound;
 @Controller
 public class HomeController {
 	
-	private static  final Logger loger=LoggerFactory.getLogger(HomeController.class);
-
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	@Autowired
 	private CategoryDAO categoryDAO;
 	@Autowired
 	private ProductDAO productDAO;
-
+                                         //@RequestParam(name="logout",required=false) String logout
 	@RequestMapping(value = { "/", "home", "/index" })
 	public ModelAndView index() {
 		ModelAndView mv = new ModelAndView("page");
-		loger.info("For HomeController-INFO");
-		loger.debug("For PageController-DEBUG");
+		/*if(logout!= null){
+			mv.addObject("message","You Are Successfully Logout"); 
+			
+		}*/
 		mv.addObject("title", "Home");
 		mv.addObject("categories", categoryDAO.findAll());
 		mv.addObject("onClickHome", true);
+		logger.info("Inside PageController index method - INFO");
+		logger.debug("Inside PageController index method - DEBUG");
+		
 		return mv;
 	}
 
@@ -48,6 +59,25 @@ public class HomeController {
 		ModelAndView mv = new ModelAndView("page");
 		mv.addObject("title", "About");
 		mv.addObject("onClickAbout", true);
+		return mv;
+	}
+	@RequestMapping(value = "/access_reject")
+	public ModelAndView AccessDenied() {
+		ModelAndView mv = new ModelAndView("error");
+		mv.addObject("title", "Deny");
+		mv.addObject("errorTitle", "Do not try to Acceess the admin page");
+		mv.addObject("errorDesc", "You are not an ADMIN");
+		return mv;
+	}
+
+	@RequestMapping(value = "/login")
+	public ModelAndView login(@RequestParam(name="error",required=false) String error) {
+		ModelAndView mv = new ModelAndView("login");
+		if(error!= null){
+			mv.addObject("message","Email and password are not match"); 
+			
+		}
+		mv.addObject("title", "Login");
 		return mv;
 	}
 
@@ -85,5 +115,13 @@ public class HomeController {
 		mv.addObject("onClickShowProduct", true);
 		return mv;
 
+	}
+	@RequestMapping(value ="/perform-logout")
+	public String logout(HttpServletRequest request, HttpServletResponse response){
+		Authentication auth=SecurityContextHolder.getContext().getAuthentication();
+		if(auth!=null){
+			new SecurityContextLogoutHandler().logout(request, response, auth);
+		}
+		return "redirect:/home?logout";
 	}
 }

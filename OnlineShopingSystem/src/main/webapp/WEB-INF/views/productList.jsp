@@ -44,8 +44,7 @@
 								<th>BRAND</th>
 								<th>PRICE</th>
 								<th>AVABLE_ITEM</th>
-								<th>VIEWS</th>
-								<th>ACTION</th>
+								<th>VIEWS/ACTION</th>
 							</tr>
 
 						</thead>

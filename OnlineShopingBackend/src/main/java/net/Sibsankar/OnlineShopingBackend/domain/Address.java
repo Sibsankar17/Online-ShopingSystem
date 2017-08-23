@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -16,14 +17,14 @@ public class Address implements Serializable  {
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	@Column(name = "user_id")
 	private int userId;
 	@NotBlank(message="Please  fill address line1" )
-	@Column(name="ADDRESS_LINE1")
+	@Column(name="ADDRESS_LINE_1")
 	private String address1;
-	@Column(name="ADDRESS_LINE2")
+	@Column(name="ADDRESS_LINE_2")
 	@NotBlank(message="Please  fill address line2 ")
 	private String address2;
 	@NotBlank(message="Please  fill city field")
@@ -31,7 +32,7 @@ public class Address implements Serializable  {
 	@NotBlank(message="Please  fill state field ")
 	private String state;
 	private String country;
-	@Column(name="PINCODE")
+	@Column(name="PIN_CODE")
 	@NotBlank(message="Please  fill proper pincode ")
 	private String pincode;
 	private boolean billing;

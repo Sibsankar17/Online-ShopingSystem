@@ -17,25 +17,23 @@ public class ProductDaoImpl implements ProductDAO {
 	private SessionFactory sessionFactory;
 
 	@Override
+	@Transactional(noRollbackFor = Exception.class)
 	public Product get(int id) {
 
 		try {
 			return sessionFactory.getCurrentSession().get(Product.class, Integer.valueOf(id));
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			
 		}
 		return null;
 	}
 
 	@Override
 	public List<Product> list() {
-		try {
 			
 			return sessionFactory.getCurrentSession().createQuery("from Product",Product.class).getResultList();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return null;
+
 
 	}
 

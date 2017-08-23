@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -15,13 +16,13 @@ public class Cart implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.AUTO)
 	private int Id;
 	@OneToOne
-	@JoinColumn(name="userId")
+	@JoinColumn(name="user_Id")
 	private User user;
 	private Double grandTotal;
-	private int cartline;
+	private int cartLines;
 	public int getId() {
 		return Id;
 	}
@@ -40,12 +41,14 @@ public class Cart implements Serializable{
 	public void setGrandTotal(Double grandTotal) {
 		this.grandTotal = grandTotal;
 	}
-	public int getCartline() {
-		return cartline;
+	public int getCartLines() {
+		return cartLines;
 	}
-	public void setCartline(int cartline) {
-		this.cartline = cartline;
+	public void setCartLines(int cartLines) {
+		this.cartLines = cartLines;
 	}
+	
+	
 	
 	
 	

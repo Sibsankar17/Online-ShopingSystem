@@ -20,6 +20,18 @@ $(function() {
 		$('#a_' + menu).addClass('active');
 
 	}
+	
+	// to tackle the csrf token
+	var token = $('meta[name="_csrf"]').attr('content');
+	var header = $('meta[name="_csrf_header"]').attr('content');
+	
+	if(token.length > 0 && header.length > 0) {		
+		// set the token header for the ajax request
+		$(document).ajaxSend(function(e, xhr, options) {			
+			xhr.setRequestHeader(header,token);
+			
+		});				
+	}
 	// jquery datatable
 
 	var $table = $('#productListTable');
@@ -28,77 +40,93 @@ $(function() {
 		if (window.categoryId == '') {
 			jsonUrl = window.contextRoot + '/json/all/product';
 		} else {
-			jsonUrl = window.contextRoot + '/json/category/'
-					+ window.categoryId + '/product';
+			jsonUrl = window.contextRoot + '/json/category/'+ window.categoryId + '/product';
 
 		}
+		
+$table.DataTable( {
+			
+			lengthMenu: [ [ 5, 8, 12, -1 ], ['5Records','8Records','12 Records','ALL']],
+			pageLength: 8,
+			ajax: {
+				url: jsonUrl,
+				dataSrc: ''
+			},
+			columns: [
+			          {
+			        	  data: 'code',
+			        	  bSortable: false,
+			        	  mRender: function(data, type, row) {
+			        		  
+			        		  return '<img src="'+window.contextRoot+'/resources/images/'+data+'.jpg" class="imageData"/>';
+			        		  
+			        	  }
+			          },
+			          {
+			        	  data: 'name'			        	  
+			          },
+			          {
+			        	  data: 'brand'			        	  
+			          },
+			          {
+			        	  data: 'unitPrice',
+			        	  mRender: function(data, type, row) {
+			        		  return '&#8377; ' + data
+			        	  }
+			          },
+			          {
+			        	  data: 'quantity',
+			        	  mRender: function(data, type, row) {
+			        		
+			        		  if(data < 1) {
+			        			  return '<span style="color:red">Out of Stock!</span>';
+			        		  }
+			        		  
+			        		  return data;
+			        		  
+			        	  }
+			          },
+			          {
+			        	  data: 'id',
+			        	  bSortable: false,
+			        	  mRender: function(data, type, row) {
+			        		  
+			        		  var str = '';
+			        		  str += '<a href="'+window.contextRoot+ '/show/'+data+'/product" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span>View</a>&#160;';
+			        		  if(userRole =='ADMIN') {
+			        		  str += '<a href="'+window.contextRoot+ '/manage/'+data+'/product" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span>Edit</a>';
+			        		  }
+			        		  else {
+				        		  if(row.quantity < 1) {
+				        	
+				        			  str += '<a href="javascript:void(0)" class="btn btn-success disabled">AddToCart</a>';
+				        		  }
+				        		  else {
+				        			  str += '<a href="'+window.contextRoot+ '/cart/add/'+data+'/product" class="btn btn-success"><span class="glyphicon glyphicon-shopping-cart"></span>AddToCart</a>';  
+				        		  }
+			        		  }
+			        		  
+			        	return str;
+			        		  
+			        	  }
+			        	  
+			          }
+			          ]
+		});
 	}
-	// console.log('inside the table');
-	$table
-			.DataTable({
-				lengthMenu : [ [ 5, 8, 12, -1 ],
-						[ '5:Record', '8:Record', '12:Record', 'All' ] ],
-				ajax : {
-					url : jsonUrl,
-					dataSrc : ''
-				},
-				columns : [
-						{
-							data : 'code',
-							mRender : function(data, type, row) {
-								return '<img src="' + window.contextRoot
-										+ '/resources/imeges/' + data
-										+ '.jpg" class="imageData"/>'
-							}
-						},
+	
+	
+	// dismissing the alert after 3 seconds
+	var $alert = $('.alert');
+	
+	if($alert.length) {
+		
+		setTimeout(function() {
+			$alert.fadeOut('slow');
+		} , 3000)
+				
+	}	
 
-						{
-							data : 'name'
-						},
-						{
-							data : 'brand'
-						},
-						{
-							data : 'unitPrice',
-							mRender : function(data, type, row) {
-								return '&#8360;:' + data;
-							}
-						},
-						{
-							data : 'quantity',
-							mRender : function(data, type, row) {
-								if (data < 1) {
-									return '<span style="color:red" >Out Of Stock</span>';
-								}
-								return data;
-							}
-						},
-						{
-							data : 'views'
-						},
-						{
-							data : 'id',
-							mRender : function(data, type, row) {
-								var str = '';
-								str += '<a href="'
-										+ window.contextRoot
-										+ '/show/'
-										+ data
-										+ '/product" class="btn btn-primary" style="color:green;background:yellow">View</a>&#160';
-								if (row.quantity < 1) {
-									str += '<a href="javascript:void(0)" class="btn btn-primary disabled" style="color:red;padding:0px">AddToCart</a>';
-								} else {
-									str += '<a href="'
-											+ window.contextRoot
-											+ '/cart/add/'
-											+ data
-											+ '/product"class="btn btn primary" style="background:green">AddToCart</a>';
-								}
-
-								return str;
-							}
-						} ]
-			})
 
 	// data table for admin
 	// ---------------------------------
@@ -128,7 +156,7 @@ $(function() {
 								mRender : function(data, type, row) {
 									return '<img src="'
 											+ window.contextRoot
-											+ '/resources/imeges/'
+											+ '/resources/images/'
 											+ data
 											+ '.jpg" class="dataTableImg"/>';
 								}
@@ -238,6 +266,7 @@ $(function() {
 					}
 				});
 	}
+	
 	// Jquery validation for Category Form..
 	var $categoryForm=$('#categoryForm');
 	if($categoryForm.length){
@@ -285,5 +314,52 @@ $(function() {
 
 
 }
+	// jquery validation for Login Form..
+	var $loginForm=$('#loginForm');
+	if($loginForm.length){
+		$loginForm.validate({
+			
+	rules : {
+		
+		username : {
+			
+			required: true,
+			email: true,
+			
+		},
+		
+		password: {
+			required: true
+		}
+		
+	},
+	
+	messages : {
+		
+		username: {
+			
+			required: 'Enter your Email Id!',
+			email: 'The email should not be less than 3 characters'
+			
+		},
+		
+		password: {
+			
+			required: 'Password must'
+		}
+		
+		
+	},
+	errorElement: 'em',
+	errorPlacement: function(error, element) {
+		// add the class of Error
+		error.addClass('ErrorElement');
+		// add the error element after the input element
+		error.insertAfter(element);				
+	   }
+     });
 
-})
+
+   
+	}
+});

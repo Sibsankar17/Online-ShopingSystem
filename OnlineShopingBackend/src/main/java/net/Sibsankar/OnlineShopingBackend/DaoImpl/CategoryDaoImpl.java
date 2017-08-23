@@ -3,6 +3,7 @@ package net.Sibsankar.OnlineShopingBackend.DaoImpl;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,20 +21,25 @@ public class CategoryDaoImpl implements CategoryDAO {
 	@Override
 	public List<Category> findAll() {
 		
-		String hql="FROM Category  WHERE active = :active";
+			/*String hql = "FROM Category  WHERE active = :active";
+			return sessionFactory.getCurrentSession().createQuery(hql, Category.class).setParameter("active", true)
+					.getResultList();*/
+        String selectActiveCategory = "FROM Category WHERE active = :active";
 		
-       return sessionFactory.getCurrentSession().createQuery(hql,Category.class).setParameter("active", true).getResultList();
+		@SuppressWarnings("unchecked")
+		Query<Category> query = sessionFactory.getCurrentSession().createQuery(selectActiveCategory);
+				
+		query.setParameter("active", true);
+						
+		return query.getResultList();
+
 	}
 
 	@Override
 	public Category get(int id) {
 
-		try {
 			return sessionFactory.getCurrentSession().get(Category.class, Integer.valueOf(id));
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return null;
-		}
+		
 	}
 
 	@Override

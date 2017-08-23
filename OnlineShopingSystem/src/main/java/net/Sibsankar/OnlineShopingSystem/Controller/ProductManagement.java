@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,12 +27,14 @@ import net.Sibsankar.OnlineShopingSystem.Upload.FileUpload;
 import net.Sibsankar.OnlineShopingSystem.valid.ProoductValidation;
 
 @Controller
-@RequestMapping(value = "/manage")
+@RequestMapping("/manage")
 public class ProductManagement {
 	@Autowired
 	private CategoryDAO categoryDAO;
 	@Autowired
 	private ProductDAO productDAO;
+     
+	private static final Logger logger = LoggerFactory.getLogger(ProductManagement.class);
 
 	@RequestMapping(value = "/products", method = RequestMethod.GET)
 	public ModelAndView manageProduct(@RequestParam(name = "save", required = false) String save) {
@@ -76,12 +80,14 @@ public class ProductManagement {
 				new ProoductValidation().validate(newProduct, results);
 			}
 		}
-       //For Eror in product Form
+       //For Error in product Form
 		if (results.hasErrors()) {
 			model.addAttribute("onClickManageProduct", true);
 			model.addAttribute("title", "ProductManagement");
 			return "page";
+			
 		}
+		logger.info(newProduct.toString());
 		//Checking for Existing product
 		if (newProduct.getId() == 0) {
 			productDAO.add(newProduct);

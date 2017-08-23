@@ -1,5 +1,8 @@
 package net.Sibsankar.OnlineShopingSystem.Exception;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,8 +30,12 @@ public class DefaultExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	public ModelAndView notFound(Exception ex){
 		ModelAndView mv=new ModelAndView("error");
-		mv.addObject("errorTitle","Error" );
-		mv.addObject("errorDesc", "No Macth with product ID: "+ex.toString());
+		mv.addObject("errorTitle","Error Like This" );
+		//only for debug
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
+		ex.printStackTrace(pw);
+		mv.addObject("errorDesc", "No Macth with product ID: "+sw.toString());
 		mv.addObject("title", "No Product");
 		return mv;
 	}

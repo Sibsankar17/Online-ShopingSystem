@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:wf="http://www.springframework.org/schema/webflow-config"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.4.xsd
-		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:wf="http://www.springframework.org/schema/webflow-config"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow-config  
+	    http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.4.xsd
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<context:component-scan base-package="net.Sibsankar.OnlineShopingSystem" />
-	<context:component-scan base-package="net.Sibsankar.OnlineShopingBackend" />
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />
@@ -26,8 +31,7 @@
 		<wf:flow-location-pattern value="/**/*-flow.xml" />
 	</wf:flow-registry>
 	<wf:flow-builder-services id="flowBuilderServices"
-		view-factory-creator="viewFactoryCreator" 
-		validator="validator"/>
+		view-factory-creator="viewFactoryCreator" validator="validator" />
 
 
 	<bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
@@ -43,5 +47,5 @@
 
 	</bean>
 	<bean id="validator"
-	 class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 </beans>

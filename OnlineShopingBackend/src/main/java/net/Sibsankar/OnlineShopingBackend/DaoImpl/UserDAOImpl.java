@@ -34,14 +34,14 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User getByEmail(String email) {
-		String hql = "FROM User WHERE email = :email";
+		String hql = "FROM  User WHERE email=:email";
 		try {
 
 			return sessionFactory.getCurrentSession().createQuery(hql, User.class).setParameter("email", email)
 					.getSingleResult();
 
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			//ex.printStackTrace();
 			return null;
 		}
 
