@@ -10,7 +10,7 @@ import javax.persistence.Id;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-@Entity(name="ADDRESS")
+@Entity
 public class Address implements Serializable  {
 	/**
 	 * 
@@ -35,8 +35,10 @@ public class Address implements Serializable  {
 	@Column(name="PIN_CODE")
 	@NotBlank(message="Please  fill proper pincode ")
 	private String pincode;
+	@Column(name = "is_billing")
 	private boolean billing;
-	private boolean shiping;
+	@Column(name = "is_shipping")
+	private boolean shipping;
 	public int getId() {
 		return id;
 	}
@@ -91,18 +93,19 @@ public class Address implements Serializable  {
 	public void setBilling(boolean billing) {
 		this.billing = billing;
 	}
-	public boolean isShiping() {
-		return shiping;
+	public boolean isShipping() {
+		return shipping;
 	}
-	public void setShiping(boolean shiping) {
-		this.shiping = shiping;
+	public void setShipping(boolean shipping) {
+		this.shipping = shipping;
 	}
 	@Override
 	public String toString() {
 		return "Address [id=" + id + ", userId=" + userId + ", address1=" + address1 + ", address2=" + address2
 				+ ", city=" + city + ", state=" + state + ", country=" + country + ", pincode=" + pincode + ", billing="
-				+ billing + ", shiping=" + shiping + "]";
+				+ billing + ", shipping=" + shipping + "]";
 	}
+	
 	
 	
 	

@@ -9,7 +9,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="${contextRoot}/home">Online Shop</a>
+			<a class="navbar-brand" href="${contextRoot}/home">Main Page</a>
 		</div>
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse"
@@ -20,7 +20,7 @@
 						Product</a></li>
 				<li id="contact"><a href="${contextRoot}/contact">ContactUs</a></li>
 				<security:authorize access="hasAuthority('ADMIN')">
-				<li id="productManage"><a href="${contextRoot}/manage/products">ProductsManagement</a></li>
+				<li id="productManage"><a href="${contextRoot}/manage/products">Products Management</a></li>
 				</security:authorize>
 			</ul>
 

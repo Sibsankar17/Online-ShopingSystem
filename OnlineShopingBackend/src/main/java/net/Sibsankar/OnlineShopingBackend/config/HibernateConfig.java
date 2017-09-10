@@ -15,7 +15,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@ComponentScan(basePackages = { "net.Sibsankar.OnlineShopingBackend" })
+@ComponentScan(basePackages = {"net.Sibsankar.OnlineShopingBackend.domain"})
 @EnableTransactionManagement
 public class HibernateConfig {
 
@@ -24,7 +24,6 @@ public class HibernateConfig {
 	private final static String DATABASE_DILACT = "org.hibernate.dialect.MySQLDialect";
 	private final static String DATABASE_USERNAME = "root";
 	private final static String DATABASE_PASSWORD = "2617";
-	@Autowired
 	@Bean("dataSource")
 	public DataSource getDataSource() {
 		BasicDataSource ds = new BasicDataSource();
@@ -53,8 +52,8 @@ public class HibernateConfig {
 	}
 	@Bean
 	public HibernateTransactionManager getTranjectionManager(SessionFactory sessionFactory){
-		HibernateTransactionManager trans=new HibernateTransactionManager(sessionFactory);
-		return trans;
+		HibernateTransactionManager transactionManager=new HibernateTransactionManager(sessionFactory);
+		return transactionManager;
   }
 
 }

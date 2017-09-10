@@ -5,8 +5,8 @@ import java.util.List;
 import net.Sibsankar.OnlineShopingBackend.domain.Product;
 
 public interface ProductDAO {
-
-	Product get(int id);
+	
+	Product get(int productId);
 
 	List<Product> list();
 

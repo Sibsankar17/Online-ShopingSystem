@@ -17,11 +17,10 @@ public class ProductDaoImpl implements ProductDAO {
 	private SessionFactory sessionFactory;
 
 	@Override
-	@Transactional(noRollbackFor = Exception.class)
-	public Product get(int id) {
+	public Product get(int productId) {
 
 		try {
-			return sessionFactory.getCurrentSession().get(Product.class, Integer.valueOf(id));
+			return sessionFactory.getCurrentSession().get(Product.class,Integer.valueOf(productId));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			
@@ -32,7 +31,7 @@ public class ProductDaoImpl implements ProductDAO {
 	@Override
 	public List<Product> list() {
 			
-			return sessionFactory.getCurrentSession().createQuery("from Product",Product.class).getResultList();
+			return sessionFactory.getCurrentSession().createQuery("FROM Product",Product.class).getResultList();
 
 
 	}
@@ -78,14 +77,14 @@ public class ProductDaoImpl implements ProductDAO {
 	@Override
 	public List<Product> listOfActiveProduct() {
 		
-		String activeProduct="from Product where active=:active";
+		String activeProduct="FROM Product WHERE active = :active";
 		return sessionFactory.getCurrentSession().createQuery(activeProduct, Product.class)
 				.setParameter("active", true).getResultList();
 	}
 
 	@Override
 	public List<Product> listOfActiveProductByCategory(int categoryId) {
-		String activeProductCategory="from Product where  categoryId=:categoryId AND active=:active ";
+		String activeProductCategory="FROM Product WHERE active = :active AND categoryId = :categoryId";
 		return sessionFactory.getCurrentSession().createQuery(activeProductCategory, Product.class)
 				.setParameter("active", true)
 				.setParameter("categoryId", categoryId )
@@ -94,7 +93,7 @@ public class ProductDaoImpl implements ProductDAO {
 
 	@Override
 	public List<Product> getLatestActiveProduct(int count) {
-		String activeLatestProduct="from Product where active=:active ORDER BY id";
+		String activeLatestProduct="FROM Product WHERE active = :active ORDER BY id";
 		return sessionFactory.getCurrentSession().createQuery(activeLatestProduct, Product.class)
 				.setParameter("active", true)
 			     .setFirstResult(0)

@@ -2,6 +2,7 @@ package net.Sibsankar.OnlineShopingBackend.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +22,9 @@ public class Cart implements Serializable{
 	@OneToOne
 	@JoinColumn(name="user_Id")
 	private User user;
+	@Column(name = "grand_total")
 	private Double grandTotal;
+	@Column(name = "cart_lines")
 	private int cartLines;
 	public int getId() {
 		return Id;

@@ -21,8 +21,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import net.Sibsankar.OnlineShopingBackend.Dao.CategoryDAO;
 import net.Sibsankar.OnlineShopingBackend.Dao.ProductDAO;
+import net.Sibsankar.OnlineShopingBackend.Dao.UserDAO;
 import net.Sibsankar.OnlineShopingBackend.domain.Category;
 import net.Sibsankar.OnlineShopingBackend.domain.Product;
+import net.Sibsankar.OnlineShopingBackend.domain.User;
 import net.Sibsankar.OnlineShopingSystem.Upload.FileUpload;
 import net.Sibsankar.OnlineShopingSystem.valid.ProoductValidation;
 
@@ -33,7 +35,8 @@ public class ProductManagement {
 	private CategoryDAO categoryDAO;
 	@Autowired
 	private ProductDAO productDAO;
-     
+	@Autowired
+    private UserDAO userDAO;
 	private static final Logger logger = LoggerFactory.getLogger(ProductManagement.class);
 
 	@RequestMapping(value = "/products", method = RequestMethod.GET)
@@ -42,7 +45,7 @@ public class ProductManagement {
 		mv.addObject("onClickManageProduct", true);
 		mv.addObject("title", "ProductManagement");
 		Product product = new Product();
-		product.setSupplierId(1);
+		product.setSupplierId(2);
 		product.setActive(true);
 		mv.addObject("product", product);
 		if (save != null) {

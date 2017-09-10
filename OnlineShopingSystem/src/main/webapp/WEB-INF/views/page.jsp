@@ -20,7 +20,7 @@
 <meta name="_csrf_header" content="${_csrf.headerName}">
 
 <title>OnlineShoping -${title}</title>
-<script type="text/javascript">
+<script>
 	window.menu = '${title}';
 	window.contextRoot='${contextRoot}'
 </script>
